@@ -1,62 +1,51 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
+import AuthPage from "~/components/authPage";
 import CharacterMenu from "~/components/characterMenu";
 import HeadBar from "~/components/headBar";
-import ProductsMenu from "~/components/productsMenu";
-import TestGame from "~/components/testGame";
-import TheoryMenu from "~/components/theoryMenu";
-
-import { api } from "~/utils/api";
+import ProductsMenu from "~/components/products/productsMenu";
+import TestGame from "~/components/theory/testGame";
+import TheoryMenu from "~/components/theory/theoryMenu";
+import { UserDataProvider } from "~/dataContexts";
+import TermDeposits from "~/components/products/termDeposits";
 
 export default function Home() {
   const [router, setRouter] = useState("home");
+  const { data: sessionData } = useSession();
   return (
     <>
       <Head>
-        <title>Scite Learing</title>
+        <title>Scite Learning</title>
         <meta name="description" content="Create by Scite investment" />
         <link rel="icon" href="/scite.ico" />
       </Head>
       <main className="min-w-screen flex min-h-screen flex-col">
-        <HeadBar />
-
-        {router === "home" ? (
-          <div className="w-100% flex flex-row justify-center">
-            <CharacterMenu />
-            <TheoryMenu setRouter={setRouter} />
-            <ProductsMenu />
-          </div>
+        {sessionData ? (
+          <UserDataProvider>
+            <HeadBar />
+            {router === "home" && (
+              <div className="w-100% flex flex-row justify-center">
+                <CharacterMenu />
+                <TheoryMenu setRouter={setRouter} />
+                <ProductsMenu setRouter={setRouter} />
+              </div>
+            )}
+            {router === "generalEconomy" && (
+              <div className="w-100% flex flex-row justify-center">
+                <TestGame setRouter={setRouter} />
+              </div>
+            )}
+            {router === "termDeposits" && (
+              <div className="w-100% flex flex-row justify-center">
+                <TermDeposits setRouter={setRouter} />
+              </div>
+            )}
+          </UserDataProvider>
         ) : (
-          <div className="w-100% flex flex-row justify-center">
-            <TestGame setRouter={setRouter} />
-          </div>
+          <AuthPage />
         )}
       </main>
     </>
-  );
-}
-
-function AuthShowcase() {
-  const { data: sessionData } = useSession();
-
-  const { data: secretMessage } = api.post.getSecretMessage.useQuery(
-    undefined, // no input
-    { enabled: sessionData?.user !== undefined },
-  );
-
-  return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      <p className="text-center text-2xl text-white">
-        {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-        {secretMessage && <span> - {secretMessage}</span>}
-      </p>
-      <button
-        className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-        onClick={sessionData ? () => void signOut() : () => void signIn()}
-      >
-        {sessionData ? "Sign out" : "Sign in"}
-      </button>
-    </div>
   );
 }

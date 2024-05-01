@@ -22,7 +22,7 @@ export const questions = [
       "Classical economics",
       "Austrian economics",
     ],
-    answer: "Autrian economics",
+    answer: "Austrian economics",
   },
   {
     id: 3,
@@ -105,5 +105,54 @@ export const questions = [
     question: "Which of the following is not a type of trade barrier?",
     options: ["Tariff", "Quota", "Subsidy", "Free trade"],
     answer: "Free trade",
+  },
+  {
+    id: 11,
+    difficulty: "easy",
+    question: "Which economist created and described surplus value?",
+    options: [
+      "David Ricardo",
+      "Karl Marx",
+      "John Maynard Keynes",
+      "Adam Smith",
+    ],
+    answer: "Karl Marx",
+  },
+  {
+    id: 12,
+    difficulty: "easy",
+    question: "What describes the Kuznets curve?",
+    options: [
+      "The relationship between income inequality and economic growth",
+      "The relationship between inflation and unemployment",
+      "The relationship between interest rates and investment",
+      "The relationship between government spending and economic growth",
+    ],
+    answer: "The relationship between income inequality and economic growth",
+  },
+  {
+    id: 13,
+    difficulty: "easy",
+    question: "Which of the following is not a type of economic system?",
+    options: ["Capitalism", "Socialism", "Fascism", "Communism"],
+    answer: "Fascism",
+  },
+  {
+    id: 14,
+    difficulty: "easy",
+    question: "Which of the following is not a type of market failure?",
+    options: ["Perfect competition", "Monopoly", "Oligopoly", "Monopsony"],
+    answer: "Perfect competition",
+  },
+];
+
+export const currencyQuizQuestions = [
+  {
+    id: 1,
+    difficulty: "easy",
+    question: "What currency is in the picture?",
+    image: "",
+    options: ["USD", "EUR", "GBP", "JPY"],
+    answer: "USD",
   },
 ];
